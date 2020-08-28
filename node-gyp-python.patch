@@ -1,0 +1,32 @@
+commit 6d43ce52005c977ce8df57440a82bb346d3fc4cc
+Author: Tom Hughes <tom@compton.nu>
+Date:   Sat Jul 14 19:32:14 2018 +0100
+
+    Don't test that python exists
+
+diff --git a/test/test-find-python.js b/test/test-find-python.js
+index 30ba6df..2581a8e 100644
+--- a/test/test-find-python.js
++++ b/test/test-find-python.js
+@@ -5,21 +5,6 @@ var configure = require('../lib/configure')
+ var execFile = require('child_process').execFile
+ var PythonFinder = configure.test.PythonFinder
+ 
+-test('find python', function (t) {
+-  t.plan(4)
+-
+-  configure.test.findPython('python', function (err, found) {
+-    t.strictEqual(err, null)
+-    var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
+-      t.strictEqual(err, null)
+-      t.strictEqual(stdout, '')
+-      t.ok(/Python 2/.test(stderr))
+-    })
+-    proc.stdout.setEncoding('utf-8')
+-    proc.stderr.setEncoding('utf-8')
+-  })
+-})
+-
+ function poison(object, property) {
+   function fail() {
+     throw new Error('Property ' + property + ' should not have been accessed.')

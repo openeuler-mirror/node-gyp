@@ -1,0 +1,19 @@
+commit 31b5c191833a9c122de1c52ad53220da4ccd4589
+Author: Tom Hughes <tom@compton.nu>
+Date:   Mon Jan 18 17:07:41 2016 +0000
+
+    Use the system gyp
+
+diff --git a/lib/configure.js b/lib/configure.js
+index 046c12f..65e78b4 100644
+--- a/lib/configure.js
++++ b/lib/configure.js
+@@ -249,7 +249,7 @@ function configure (gyp, argv, callback) {
+     }
+ 
+     // this logic ported from the old `gyp_addon` python file
+-    var gyp_script = path.resolve(__dirname, '..', 'gyp', 'gyp_main.py')
++    var gyp_script = '/usr/bin/gyp'
+     var addon_gypi_file = gyp.opts.target || gyp.opts.nodeDir ? 'addon.gypi' : 'addon-rpm.gypi'
+     var addon_gypi = path.resolve(__dirname, '..', addon_gypi_file)
+     var common_gypi = path.resolve(nodeDir, 'include/node/common.gypi')
