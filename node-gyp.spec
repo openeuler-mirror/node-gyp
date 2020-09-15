@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 Name:                node-gyp
 Version:             3.6.0
-Release:             1
+Release:             2
 Summary:             Node.js native addon build tool
 License:             MIT
 URL:                 https://github.com/nodejs/node-gyp
@@ -10,6 +10,7 @@ Source1:             addon-rpm.gypi
 Patch1:              node-gyp-addon-gypi.patch
 Patch2:              node-gyp-system-gyp.patch
 Patch3:              node-gyp-python.patch
+Patch4:              node-gyp-python3.patch
 BuildArch:           noarch
 ExclusiveArch:       %{nodejs_arches} noarch
 Requires:            gyp nodejs-devel libuv-devel http-parser-devel gcc-c++
@@ -50,5 +51,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %{buildroot}%{_bindir}/node-
 %{_bindir}/node-gyp
 
 %changelog
+* Tue Sep 15 2020 chengzihan <chengzihan2@huawei.com> - 3.6.0-2
+- add patch node-gyp-python3.patch
+- default to python3 instead of python2
+
 * Mon Aug 17 2020 Shaoqiang Kang <kangshaoqiang1@huawei.com> - 3.6.0-1
 - Package init
