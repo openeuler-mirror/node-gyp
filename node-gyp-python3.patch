@@ -1,0 +1,104 @@
+commit d0eb1892fcb0b256fc2b0e747a51d94ab0da3cb3
+Author: Tom Hughes <tom@compton.nu>
+Date:   Thu Aug 15 21:30:32 2019 +0100
+
+    Default to python3 instead of python2
+
+diff --git a/lib/configure.js b/lib/configure.js
+index 5538e44..0f7c19b 100644
+--- a/lib/configure.js
++++ b/lib/configure.js
+@@ -29,7 +29,7 @@ exports.usage = 'Generates ' + (win ? 'MSVC project files' : 'a Makefile') + ' f
+ 
+ function configure (gyp, argv, callback) {
+ 
+-  var python = gyp.opts.python || process.env.PYTHON || 'python2'
++  var python = gyp.opts.python || process.env.PYTHON || 'python3'
+     , buildDir = path.resolve('build')
+     , configNames = [ 'config.gypi', 'common.gypi' ]
+     , configs = []
+@@ -461,7 +461,7 @@ PythonFinder.prototype = {
+         this.log.silly('stripping "rc" identifier from version')
+         version = version.replace(/rc(.*)$/ig, '')
+       }
+-      var range = semver.Range('>=2.5.0 <3.0.0')
++      var range = semver.Range('>=3.7.0 <4.0.0')
+       var valid = false
+       try {
+         valid = range.test(version)
+@@ -490,7 +490,7 @@ PythonFinder.prototype = {
+         'Python executable "' + this.python +
+         '" is v' + badVersion + ', which is not supported by gyp.\n' +
+         'You can pass the --python switch to point to ' +
+-        'Python >= v2.5.0 & < 3.0.0.'
++        'Python >= v3.7.0 & < 4.0.0.'
+     this.callback(new Error(errmsg))
+   },
+ 
+diff --git a/test/test-find-python.js b/test/test-find-python.js
+index 2581a8e..4a43fd3 100644
+--- a/test/test-find-python.js
++++ b/test/test-find-python.js
+@@ -38,7 +38,7 @@ test('find python - python', function (t) {
+   f.execFile = function(program, args, opts, cb) {
+     t.strictEqual(program, 'python')
+     t.ok(/import platform/.test(args[1]))
+-    cb(null, '2.7.0')
++    cb(null, '3.7.0')
+   }
+   f.checkPython()
+ 
+@@ -59,7 +59,7 @@ test('find python - python too old', function (t) {
+   f.execFile = function(program, args, opts, cb) {
+     t.strictEqual(program, 'python')
+     t.ok(/import platform/.test(args[1]))
+-    cb(null, '2.3.4')
++    cb(null, '3.4.5')
+   }
+   f.checkPython()
+ 
+@@ -79,7 +79,7 @@ test('find python - python too new', function (t) {
+   f.execFile = function(program, args, opts, cb) {
+     t.strictEqual(program, 'python')
+     t.ok(/import platform/.test(args[1]))
+-    cb(null, '3.0.0')
++    cb(null, '4.0.0')
+   }
+   f.checkPython()
+ 
+@@ -118,7 +118,7 @@ test('find python - no python2', function (t) {
+   f.execFile = function(program, args, opts, cb) {
+     t.strictEqual(program, 'python')
+     t.ok(/import platform/.test(args[1]))
+-    cb(null, '2.7.0')
++    cb(null, '3.7.0')
+   }
+   f.checkPython()
+ 
+@@ -165,7 +165,7 @@ test('find python - no python, use python launcher', function (t) {
+     f.execFile = function(program, args, opts, cb) {
+       t.strictEqual(program, 'Z:\\snake.exe')
+       t.ok(/import platform/.test(args[1]))
+-      cb(null, '2.7.0')
++      cb(null, '3.7.0')
+     }
+     t.strictEqual(program, 'py.exe')
+     t.notEqual(args.indexOf('-2'), -1)
+@@ -196,7 +196,7 @@ test('find python - python 3, use python launcher', function (t) {
+       f.execFile = function(program, args, opts, cb) {
+         t.strictEqual(program, 'Z:\\snake.exe')
+         t.ok(/import platform/.test(args[1]))
+-        cb(null, '2.7.0')
++        cb(null, '3.7.0')
+       }
+       t.strictEqual(program, 'py.exe')
+       t.notEqual(args.indexOf('-2'), -1)
+@@ -267,7 +267,7 @@ test('find python - no python, no python launcher, good guess', function (t) {
+     f.execFile = function(program, args, opts, cb) {
+       t.ok(re.test(program))
+       t.ok(/import platform/.test(args[1]))
+-      cb(null, '2.7.0')
++      cb(null, '3.7.0')
+     }
+     t.strictEqual(program, 'py.exe')
+     cb(new Error('not found'))
