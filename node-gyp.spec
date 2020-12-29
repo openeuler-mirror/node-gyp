@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 Name:                node-gyp
 Version:             3.6.0
-Release:             2
+Release:             3
 Summary:             Node.js native addon build tool
 License:             MIT
 URL:                 https://github.com/nodejs/node-gyp
@@ -11,13 +11,14 @@ Patch1:              node-gyp-addon-gypi.patch
 Patch2:              node-gyp-system-gyp.patch
 Patch3:              node-gyp-python.patch
 Patch4:              node-gyp-python3.patch
+Patch5:              node-gyp-node12.patch
 BuildArch:           noarch
 ExclusiveArch:       %{nodejs_arches} noarch
 Requires:            gyp nodejs-devel libuv-devel http-parser-devel gcc-c++
 BuildRequires:       gyp nodejs-devel libuv-devel http-parser-devel gcc-c++
 BuildRequires:       npm(tape) npm(bindings) npm(fstream) npm(glob) npm(graceful-fs) npm(minimatch)
 BuildRequires:       npm(mkdirp) npm(nan) npm(nopt) npm(npmlog) npm(osenv) npm(path-array)
-BuildRequires:       npm(request) npm(require-inject) npm(rimraf) npm(semver) npm(tar) npm(which)
+BuildRequires:       npm(request) npm(require-inject) npm(rimraf) npm(semver) npm(tar) npm(which) vim
 %description
 node-gyp is a cross-platform command-line tool written in Node.js for compiling
 native addon modules for Node.js, which takes away the pain of dealing with the
@@ -51,6 +52,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %{buildroot}%{_bindir}/node-
 %{_bindir}/node-gyp
 
 %changelog
+* The Dec 29 2020 huanghaitao <huanghaitao8@huawei.com> - 3.6.0-3
+- Fix test errors in node 12+
+
 * Tue Sep 15 2020 chengzihan <chengzihan2@huawei.com> - 3.6.0-2
 - add patch node-gyp-python3.patch
 - default to python3 instead of python2
