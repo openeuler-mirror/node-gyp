@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 Name:                node-gyp
 Version:             3.6.0
-Release:             4
+Release:             5
 Summary:             Node.js native addon build tool
 License:             MIT
 URL:                 https://github.com/nodejs/node-gyp
@@ -11,7 +11,7 @@ Patch1:              node-gyp-addon-gypi.patch
 Patch2:              node-gyp-system-gyp.patch
 Patch3:              node-gyp-python.patch
 Patch4:              node-gyp-python3.patch
-Patch5:              node-gyp-node12.patch
+Patch5:              node-gyp-update-test.patch
 BuildArch:           noarch
 ExclusiveArch:       %{nodejs_arches} noarch
 Requires:            gyp nodejs-devel libuv-devel http-parser-devel gcc-c++
@@ -52,6 +52,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %{buildroot}%{_bindir}/node-
 %{_bindir}/node-gyp
 
 %changelog
+* Tue Mar 16 2022 wangyangdahai <admin@you2.top> - 3.6.0-5
+- update test code for nodejs v16
+
 * Thu Jan 21 2021 lingsheng <lingsheng@huawei.com> - 3.6.0-4
 - Limit npm(nan) version to fix test errors
 
